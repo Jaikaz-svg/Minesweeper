@@ -10,6 +10,7 @@
 
 #include "iostream"
 #include "lib.h"
+#include <limits>
 using namespace std;
 int main(){
     Coords input; 
@@ -26,7 +27,21 @@ int main(){
     pole.make_pole(height, width, procentage);
     while (pole.game_running()){
         pole.print_pole();
-        cout<<"coords: "; cin >> input.x >> input.y; cout << endl;
+        cout<<"coords: ";
+        if (cin >> input.x >> input.y){
+            if (input.x > pole.get_width() || input.y > pole.get_height()){
+                cout << "Index out of range\n";
+            }
+            else {
+
+            }
+        } 
+        else {
+            cout << "Invalid input\n";
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+
 
 
     }

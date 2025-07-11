@@ -43,7 +43,8 @@ class Field{
 public:
     void set_size(int, int);
     void set_mine_prtg(float f){mine_prtg = f;}// no need
-
+    int get_width(){return width;}
+    int get_height(){return height;}
     bool game_running(int game_end = 1){
         if (game_end == 0) game_run = game_end;
         return game_run;

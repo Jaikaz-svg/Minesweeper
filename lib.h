@@ -28,12 +28,13 @@ void Field::make_pole(int height, int width, float procentage){
 
 void Field::print_pole(){
     int num = 0;
-    for (int i = 1; i <= height; ++i)
+    for (int i = 1; i <= height; ++i){
         for (int j = 1; j <= width; ++j){
             num = count_env(this->pole, i, j);
             print_cell(pole[i][j], num);
         }
         std::cout << std::endl;
+    }
 }
 
 int count_env(Cell (*pole)[50], int i, int j){
