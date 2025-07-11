@@ -16,6 +16,7 @@ int main(){
     Coords input; 
     Field pole;
 
+    int flag;
     int height,width;
     float procentage;
 
@@ -33,13 +34,16 @@ int main(){
     pole.print_pole(0);
     while (pole.game_running()){
         cout<<"coords(x, y): ";
-        if (cin >> input.x >> input.y){
-            if (input.x > pole.get_width() || input.y > pole.get_height()){
+        if (cin >> input.x >> input.y >> flag){
+            if (input.x > pole.get_width() || input.y > pole.get_height() || input.x == 0 || input.y == 0){
                 cout << "Index out of range\n";
             }
             else {
                 int env = pole.count_env(input.y, input.x);
-                pole.set_status(input.y, input.x, Cell::STATUS::open);
+                if (flag == 1)
+                    pole.set_status(input.y, input.x, Cell::STATUS::excharged);
+                else
+                    pole.set_status(input.y, input.x, Cell::STATUS::open);
                 pole.print_pole(env);
                 /* TODO: обработка ввода, в начале
                 открывается sqrt(height*width) ящеек,

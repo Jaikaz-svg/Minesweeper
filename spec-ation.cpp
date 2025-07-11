@@ -22,8 +22,10 @@ public:
 public:
     Cell() = default;
     explicit Cell(STATUS status, MINED mined):status{status, mined}{}
-    void set_status(STATUS status, MINED mined = no){
+    void set_status_status(STATUS status){
         this->status.status = status;
+    }
+    void set_status_mined(MINED mined){
         this->status.mined = mined;
     }
     void set_coords(int x, int y){
@@ -33,7 +35,7 @@ public:
     Status get_status(){return status;}
     MINED get_mined(){return status.mined;}
     Coords get_coords(){return coords;}
-    void print_cell(const Cell, int);
+    void print_cell(int);
 };
 
 
@@ -58,7 +60,7 @@ public:
     Status cmp(Coords);
     int count_env(int i, int j);
     void set_status(int i, int j, STATUS st){
-        pole[i][j].set_status(st);
+        pole[i][j].set_status_status(st);
     }
 };
 
