@@ -2,6 +2,9 @@
 #include <ctime>
 #include <stdlib.h>
 #include <iostream>
+#include <iomanip>
+
+using namespace std;
 
 int count_env(Cell (*pole)[50], int, int);
 void print_cell(Cell, int);
@@ -26,44 +29,59 @@ void Field::make_pole(int height, int width, float procentage){
         }
 }
 
-void Field::print_pole(){
-    int num = 0;
-    for (int i = 1; i <= height; ++i){
-        for (int j = 1; j <= width; ++j){
-            num = count_env(this->pole, i, j);
-            print_cell(pole[i][j], num);
+void Field::print_pole(int num){
+    cout << endl;
+    for (int i = 0; i <= height; ++i){
+        for (int j = 0; j <= width; ++j){
+            if (i == 0) cout << setw(3) << j;
+            else if (j == 0) cout << setw(3) << i << " ";
+            else {
+                num = count_env(i, j);
+                print_cell(pole[i][j], num);
+            }
         }
-        std::cout << std::endl;
+        cout << endl;
     }
+    cout << endl;
 }
 
-int count_env(Cell (*pole)[50], int i, int j){
-    int num = (pole[i-1][j-1].get_mined() == Cell::MINED::yes) +
-        (pole[i-1][j].get_mined() == Cell::MINED::yes) +
-        (pole[i-1][j+1].get_mined() == Cell::MINED::yes) +
-        (pole[i][j-1].get_mined() == Cell::MINED::yes) +
-        (pole[i][j+1].get_mined() == Cell::MINED::yes) +
-        (pole[i+1][j-1].get_mined() == Cell::MINED::yes) +
-        (pole[i+1][j].get_mined() == Cell::MINED::yes) +
-        (pole[i+1][j+1].get_mined() == Cell::MINED::yes);
+int Field::count_env(int i, int j){
+    int num = (pole[i-1][j-1].get_mined()) +
+        (pole[i-1][j].get_mined()) +
+        (pole[i-1][j+1].get_mined()) +
+        (pole[i][j-1].get_mined()) +
+        (pole[i][j+1].get_mined()) +
+        (pole[i+1][j-1].get_mined()) +
+        (pole[i+1][j].get_mined()) +
+        (pole[i+1][j+1].get_mined());
     
     return num;
 }
 
-void print_cell(Cell point, int num){
-    Cell::STATUS status = point.get_status();
-    Cell::MINED mined = point.get_mined();
-    if (status == Cell::STATUS::close){
-        std::cout << "? "; 
+void Cell::print_cell(const Cell obj, int num){
+    if (obj.status.status == Cell::STATUS::close){
+        cout << setw(3) << "? "; 
     }
-    else if (status == Cell::STATUS::excharged){
-        std::cout << "# ";
+    else if (obj.status.status == Cell::STATUS::excharged){
+        cout << setw(3) << "# ";
     }
-    else if (status == Cell::STATUS::open && mined == Cell::MINED::yes){
-        std::cout <<  "* ";
+    else if (obj.status.status == Cell::STATUS::open && this->status.mined == Cell::MINED::yes){
+        cout << setw(3) << "* ";
     }
-    else if (status == Cell::STATUS::open && mined == Cell::MINED::no){
-        std::cout << num << ' ';
+    else if (obj.status.status == Cell::STATUS::open && this->status.mined == Cell::MINED::no){
+        cout << setw(3) << num;
     }
     else {std::cout << "print_cell failier" << std::endl; exit(1);}
 }
+
+Cell::Status Field::cmp(Coords input){
+    Coords cell;
+    for (int i = 0; i < height; ++i)
+        for (int j = 0; j < width; ++j){
+            cell = pole[i][j].get_coords();
+            if (cell.x == input.x && cell.y == input.y){
+                return pole[i][j].get_status();
+            }
+        }
+    exit(1);// Если в массиве не элемента с такими индексами
+}   

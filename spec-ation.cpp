@@ -1,7 +1,8 @@
 // если игрок нажимает на поле у которой SATUS=charged
 // идет вызов Field::end_game(0)
 
-struct Coords{
+struct Coords{ // мы должны искать ячейку с такими координатами
+            //и в зависимости от ее статуса, печатать на экран
     int x;
     int y;
 };
@@ -9,19 +10,19 @@ struct Coords{
 class Cell{
 public:
     enum STATUS {open, close, excharged};
-    enum MINED {yes, no};
-    struct status{
+    enum MINED {no, yes};
+    struct Status{
         STATUS status;
         MINED mined;
     };
-private:
-    status status{close, no};
+ protected:
+    Status status{close, no};
     Coords coords;
     int env{0};
 public:
     Cell() = default;
     explicit Cell(STATUS status, MINED mined):status{status, mined}{}
-    void set_status(STATUS status, MINED mined){
+    void set_status(STATUS status, MINED mined = no){
         this->status.status = status;
         this->status.mined = mined;
     }
@@ -29,12 +30,14 @@ public:
         coords.x = x;
         coords.y = y;
     }
-    Cell::STATUS get_status(){return status.status;}
-    Cell::MINED get_mined(){return status.mined;}
+    Status get_status(){return status;}
+    MINED get_mined(){return status.mined;}
+    Coords get_coords(){return coords;}
+    void print_cell(const Cell, int);
 };
 
 
-class Field{
+class Field : public Cell{
     bool game_run{1};
     int width{0};
     int height{0};
@@ -51,6 +54,11 @@ public:
     }
 
     void make_pole(int, int, float);
-    void print_pole();
+    void print_pole(int);
+    Status cmp(Coords);
+    int count_env(int i, int j);
+    void set_status(int i, int j, STATUS st){
+        pole[i][j].set_status(st);
+    }
 };
 

@@ -15,25 +15,38 @@ using namespace std;
 int main(){
     Coords input; 
     Field pole;
+
     int height,width;
     float procentage;
+
     cout<<"Welcom to mines\n ? - unknown\n\
  # - excharged\n 0..8 - mine quantity\n * - mine"<< endl;
+
     cout << "Height: "; cin >> height; 
     cout << "Width: "; cin >> width;
     pole.set_size(width, height);
+
     cout << "Percent mines: "; cin >> procentage;
     pole.set_mine_prtg(procentage);
+
     pole.make_pole(height, width, procentage);
+    pole.print_pole(0);
     while (pole.game_running()){
-        pole.print_pole();
-        cout<<"coords: ";
+        cout<<"coords(x, y): ";
         if (cin >> input.x >> input.y){
             if (input.x > pole.get_width() || input.y > pole.get_height()){
                 cout << "Index out of range\n";
             }
             else {
-
+                int env = pole.count_env(input.y, input.x);
+                pole.set_status(input.y, input.x, Cell::STATUS::open);
+                pole.print_pole(env);
+                /* TODO: обработка ввода, в начале
+                открывается sqrt(height*width) ящеек,
+                затем по одной, до тех пор пока не
+                откроется мина, тогда вызывается метод
+                game_run();
+                */
             }
         } 
         else {
