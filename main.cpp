@@ -14,7 +14,6 @@
 using namespace std;
 int main(){
     Coords input; 
-    Field pole;
 
     int flag;
     int height,width;
@@ -25,12 +24,10 @@ int main(){
 
     cout << "Height: "; cin >> height; 
     cout << "Width: "; cin >> width;
-    pole.set_size(width, height);
 
     cout << "Percent mines: "; cin >> procentage;
-    pole.set_mine_prtg(procentage);
 
-    pole.make_pole(height, width, procentage);
+    Field pole(height, width, procentage);
     pole.print_pole(0);
     while (pole.game_running()){
         cout<<"coords(x, y): ";

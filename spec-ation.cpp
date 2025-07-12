@@ -46,6 +46,9 @@ class Field : public Cell{
     float mine_prtg{0.0};// no need
     Cell pole[50][50];
 public:
+    Field(int height, int width, float pr) : height(height), width(width), mine_prtg(pr){
+        make_pole(height, width, pr);
+    }
     void set_size(int, int);
     void set_mine_prtg(float f){mine_prtg = f;}// no need
     int get_width(){return width;}

@@ -17,8 +17,8 @@ void Field::set_size(int w, int h){
 void Field::make_pole(int height, int width, float procentage){
     srand(time(NULL));
     int x; 
-    for (int i = 1; i <= height+1; ++i)
-        for (int j = 1; j <= width+1; ++j){
+    for (int i = 1; i <= height; ++i)
+        for (int j = 1; j <= width; ++j){
             x = rand() % 101;
             pole[i][j].set_coords(j,i);
             if (x < procentage && i != height && j != width){
