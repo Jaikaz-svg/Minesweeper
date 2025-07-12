@@ -45,21 +45,20 @@ class Field : public Cell{
     float mine_prtg{0.0};
     Cell pole[50][50];
 public:
-    Field(int height, int width, float pr) : height(height), width(width), mine_prtg(pr){
-        make_pole(height, width, pr);
+    Field() = default;
+    void set_difficulty(int h, int w, float pr){
+        height = h;
+        width = w;
+        mine_prtg = pr;
     }
-    void set_size(int, int); // no need
-    void set_mine_prtg(float pr){mine_prtg = pr;}// no need
     int get_width(){return width;}
     int get_height(){return height;}
 
-    void make_pole(int, int, float);
+    void make_pole();
     void print_pole();
     Status cmp(Coords);
     int count_env(int i, int j);
-    void set_status(int i, int j, STATUS st){
-        pole[i][j].set_status_status(st);
-    }
+    void set_status(int i, int j, int flag);
 
     bool game_running(int game_end = 1){
         if (game_end == 0) game_run = game_end;

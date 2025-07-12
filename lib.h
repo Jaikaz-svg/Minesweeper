@@ -6,22 +6,14 @@
 
 using namespace std;
 
-int count_env(Cell (*pole)[50], int, int);
-void print_cell(Cell, int);
-
-void Field::set_size(int w, int h){
-    this->width = w;
-    this->height = h;
-}
-
-void Field::make_pole(int height, int width, float procentage){
+void Field::make_pole(){
     srand(time(NULL));
     int x; 
     for (int i = 1; i <= height; ++i)
         for (int j = 1; j <= width; ++j){
             x = rand() % 101;
             pole[i][j].set_coords(j,i);
-            if (x < procentage && i != height && j != width){
+            if (x < mine_prtg && i != height && j != width){
                 pole[i][j].set_status_status(STATUS::close);
                 pole[i][j].set_status_mined(MINED::yes);
             }
@@ -89,4 +81,26 @@ Cell::Status Field::cmp(Coords input){
         }
     exit(1);// Если в массиве нет элемента с такими индексами
 }   
-/* Открывать квадратами 3х3 меняя значение status = open кроме мин*/
+
+void Field::set_status(int y, int x, int flag){
+if (flag == 1)
+    pole[y][x].set_status_status(Cell::STATUS::excharged);
+else
+    pole[y][x].set_status_status(Cell::STATUS::open);
+    if (pole[y-1][x-1].get_mined() == no)
+        pole[y-1][x-1].set_status_status(Cell::STATUS::open);
+    if (pole[y-1][x].get_mined() == no)
+        pole[y-1][x].set_status_status(Cell::STATUS::open);
+    if (pole[y-1][x+1].get_mined() == no)
+        pole[y-1][x+1].set_status_status(Cell::STATUS::open);
+    if (pole[y][x-1].get_mined() == no)
+        pole[y][x-1].set_status_status(Cell::STATUS::open);
+    if (pole[y][x+1].get_mined() == no)
+        pole[y][x+1].set_status_status(Cell::STATUS::open);
+    if (pole[y+1][x-1].get_mined() == no)
+        pole[y+1][x-1].set_status_status(Cell::STATUS::open);
+    if (pole[y+1][x].get_mined() == no)
+        pole[y+1][x].set_status_status(Cell::STATUS::open);
+    if (pole[y+1][x+1].get_mined() == no)
+        pole[y+1][x+1].set_status_status(Cell::STATUS::open);
+}

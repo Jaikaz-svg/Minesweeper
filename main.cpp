@@ -13,10 +13,10 @@
 #include <limits>
 using namespace std;
 int main(){
+    Field pole;
     Coords input; 
 
-    int flag;
-    int height,width;
+    int height, width, flag;
     float procentage;
 
     cout<<"Welcom to mines\n ? - unknown\n\
@@ -26,7 +26,8 @@ int main(){
     cout << "Width: "; cin >> width;
     cout << "Percent mines: "; cin >> procentage;
 
-    Field pole(height, width, procentage);
+    pole.set_difficulty(height, width, procentage);
+    pole.make_pole();
     pole.print_pole();
 
     while (pole.game_running()){
@@ -36,18 +37,7 @@ int main(){
                 cout << "Index out of range\n";
             }
             else {
-                if (flag == 1)
-                    pole.set_status(input.y, input.x, Cell::STATUS::excharged);
-                else
-                    pole.set_status(input.y, input.x, Cell::STATUS::open);
-                    pole.set_status(input.y-1, input.x-1, Cell::STATUS::open);
-                    pole.set_status(input.y-1, input.x, Cell::STATUS::open);
-                    pole.set_status(input.y-1, input.x+1, Cell::STATUS::open);
-                    pole.set_status(input.y, input.x-1, Cell::STATUS::open);
-                    pole.set_status(input.y, input.x+1, Cell::STATUS::open);
-                    pole.set_status(input.y+1, input.x-1, Cell::STATUS::open);
-                    pole.set_status(input.y+1, input.x, Cell::STATUS::open);
-                    pole.set_status(input.y+1, input.x+1, Cell::STATUS::open);
+                pole.set_status(input.y, input.x, flag);
                 pole.print_pole();
             }
         } 
