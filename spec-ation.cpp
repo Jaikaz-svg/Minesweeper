@@ -1,8 +1,7 @@
-// если игрок нажимает на поле у которой SATUS=charged
-// идет вызов Field::end_game(0)
+// если игрок нажимает на поле у которой MINED=yes
+// идет вызов Field::game_running(0)
 
-struct Coords{ // мы должны искать ячейку с такими координатами
-            //и в зависимости от ее статуса, печатать на экран
+struct Coords{ 
     int x;
     int y;
 };
@@ -43,27 +42,28 @@ class Field : public Cell{
     bool game_run{1};
     int width{0};
     int height{0};
-    float mine_prtg{0.0};// no need
+    float mine_prtg{0.0};
     Cell pole[50][50];
 public:
     Field(int height, int width, float pr) : height(height), width(width), mine_prtg(pr){
         make_pole(height, width, pr);
     }
-    void set_size(int, int);
-    void set_mine_prtg(float f){mine_prtg = f;}// no need
+    void set_size(int, int); // no need
+    void set_mine_prtg(float pr){mine_prtg = pr;}// no need
     int get_width(){return width;}
     int get_height(){return height;}
-    bool game_running(int game_end = 1){
-        if (game_end == 0) game_run = game_end;
-        return game_run;
-    }
 
     void make_pole(int, int, float);
-    void print_pole(int);
+    void print_pole();
     Status cmp(Coords);
     int count_env(int i, int j);
     void set_status(int i, int j, STATUS st){
         pole[i][j].set_status_status(st);
+    }
+
+    bool game_running(int game_end = 1){
+        if (game_end == 0) game_run = game_end;
+        return game_run;
     }
 };
 

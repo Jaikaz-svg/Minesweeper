@@ -32,7 +32,8 @@ void Field::make_pole(int height, int width, float procentage){
         }
 }
 
-void Field::print_pole(int num){
+void Field::print_pole(){
+    int num;
     cout << endl;
     for (int i = 0; i <= height; ++i){
         for (int j = 0; j <= width; ++j){
@@ -88,3 +89,4 @@ Cell::Status Field::cmp(Coords input){
         }
     exit(1);// Если в массиве нет элемента с такими индексами
 }   
+/* Открывать квадратами 3х3 меняя значение status = open кроме мин*/

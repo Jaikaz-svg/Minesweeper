@@ -1,4 +1,4 @@
-/*Процент размер поля и процент мины запрашивать у 
+/*Процент, размер поля и процент мины запрашивать у 
 пользователя, и размещать мины на поля в соответсвии
 с этим коэффициентом(x = rand; if (rand < 20) mines[0] = True;)*/
 
@@ -24,11 +24,11 @@ int main(){
 
     cout << "Height: "; cin >> height; 
     cout << "Width: "; cin >> width;
-
     cout << "Percent mines: "; cin >> procentage;
 
     Field pole(height, width, procentage);
-    pole.print_pole(0);
+    pole.print_pole();
+
     while (pole.game_running()){
         cout<<"coords(x, y): ";
         if (cin >> input.x >> input.y >> flag){
@@ -36,18 +36,19 @@ int main(){
                 cout << "Index out of range\n";
             }
             else {
-                int env = pole.count_env(input.y, input.x);
                 if (flag == 1)
                     pole.set_status(input.y, input.x, Cell::STATUS::excharged);
                 else
                     pole.set_status(input.y, input.x, Cell::STATUS::open);
-                pole.print_pole(env);
-                /* TODO: обработка ввода, в начале
-                открывается sqrt(height*width) ящеек,
-                затем по одной, до тех пор пока не
-                откроется мина, тогда вызывается метод
-                game_run();
-                */
+                    pole.set_status(input.y-1, input.x-1, Cell::STATUS::open);
+                    pole.set_status(input.y-1, input.x, Cell::STATUS::open);
+                    pole.set_status(input.y-1, input.x+1, Cell::STATUS::open);
+                    pole.set_status(input.y, input.x-1, Cell::STATUS::open);
+                    pole.set_status(input.y, input.x+1, Cell::STATUS::open);
+                    pole.set_status(input.y+1, input.x-1, Cell::STATUS::open);
+                    pole.set_status(input.y+1, input.x, Cell::STATUS::open);
+                    pole.set_status(input.y+1, input.x+1, Cell::STATUS::open);
+                pole.print_pole();
             }
         } 
         else {
@@ -55,9 +56,6 @@ int main(){
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
-
-
-
     }
     return 0;
 }
