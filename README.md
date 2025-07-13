@@ -1,6 +1,7 @@
 ## Minesweeper Classic ##
 
 A classic puzzle game where you need to avoid hidden mines.
+
 This program is writen by russian student Popov AV
 
 ## Game Features ##
