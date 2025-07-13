@@ -19,9 +19,19 @@ int main(){
     int height, width, flag;
     float procentage;
 
-    cout<<"Welcom to mines\n ? - unknown\n\
- # - excharged\n 0..8 - mine quantity\n * - mine"<< endl;
-
+    std::cout <<
+        "****************************************\n"
+        "*                                      *\n"
+        "*       Welcome to Minesweeper!        *\n"
+        "*                                      *\n"
+        "*  LEGEND:                             *\n"
+        "*  ? - Unknown cell                    *\n"
+        "*  # - Flagged (possible mine)         *\n"
+        "*  1-8 - Number of nearby mines        *\n"
+        "*  * - Mine (you lose if you reveal it)*\n"
+        "*                                      *\n"
+        "****************************************\n\n";
+    cout << "Select you difficuty\n";
     cout << "Height: "; cin >> height; 
     cout << "Width: "; cin >> width;
     cout << "Percent mines: "; cin >> procentage;

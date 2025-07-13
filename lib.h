@@ -76,7 +76,7 @@ void Field::set_status(int y, int x, int flag){
     if (flag == 1)
         pole[y][x].set_condition_status(excharged);
     else{
-        if (pole[y][x].get_condition_status() == open) return;
+        if (pole[y][x].get_condition_status() == open && count_env(y, x) != 0) return;
         pole[y][x].set_condition_status(open);
         if (pole[y-1][x-1].get_condition_mined() == no)
             pole[y-1][x-1].set_condition_status(Cell::STATUS::open);
