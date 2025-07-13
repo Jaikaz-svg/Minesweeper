@@ -43,7 +43,7 @@ void Field::print_pole(){
     cout << endl;
 }
 
-int Field::count_env(int i, int j){
+int Field::count_env(int i, int j){ // считает количество мин вокруг
     int num = (pole[i-1][j-1].get_condition_mined()) +
         (pole[i-1][j].get_condition_mined()) +
         (pole[i-1][j+1].get_condition_mined()) +
@@ -56,55 +56,56 @@ int Field::count_env(int i, int j){
     return num;
 }
 
-void Cell::print_cell(int num){
-    if (this->condition.status == Cell::STATUS::close){
+void Cell::print_cell(int num){ // распечатывает содержимое ячейки
+    if (condition.status == close){
         cout << setw(3) << "? "; 
     }
-    else if (this->condition.status == Cell::STATUS::excharged){
+    else if (condition.status == excharged){
         cout << setw(3) << "# ";
     }
-    else if (this->condition.status == Cell::STATUS::open && this->condition.mined == Cell::MINED::yes){
+    else if (condition.status == open && condition.mined == yes){
         cout << setw(3) << "* ";
     }
-    else if (this->condition.status == Cell::STATUS::open && this->condition.mined == Cell::MINED::no){
+    else if (condition.status == open && condition.mined == no){
         cout << setw(2) << num << ' ';
     }
-    else {std::cout << "print_cell failier" << std::endl; exit(1);}
+    else {cout << "print_cell failier" << endl; exit(1);}
 }
 
-void Field::set_status(int y, int x, int flag){
+void Field::set_status(int y, int x, int flag){ // открыват ячейку с инпута и поле 3х3 вокруг кроме мин
     if (flag == 1)
         pole[y][x].set_condition_status(excharged);
     else{
-        if (pole[y][x].get_condition_status() == open && count_env(y, x) != 0) return;
+        if (pole[y][x].get_condition_status() == open && count_env(y, x) != 0) return; // игнорирует ввод при попытке повторно открыть клетку
         pole[y][x].set_condition_status(open);
         if (pole[y-1][x-1].get_condition_mined() == no)
-            pole[y-1][x-1].set_condition_status(Cell::STATUS::open);
+            pole[y-1][x-1].set_condition_status(open);
         if (pole[y-1][x].get_condition_mined() == no)
-            pole[y-1][x].set_condition_status(Cell::STATUS::open);
+            pole[y-1][x].set_condition_status(open);
         if (pole[y-1][x+1].get_condition_mined() == no)
-            pole[y-1][x+1].set_condition_status(Cell::STATUS::open);
+            pole[y-1][x+1].set_condition_status(open);
         if (pole[y][x-1].get_condition_mined() == no)
-            pole[y][x-1].set_condition_status(Cell::STATUS::open);
+            pole[y][x-1].set_condition_status(open);
         if (pole[y][x+1].get_condition_mined() == no)
-            pole[y][x+1].set_condition_status(Cell::STATUS::open);
+            pole[y][x+1].set_condition_status(open);
         if (pole[y+1][x-1].get_condition_mined() == no)
-            pole[y+1][x-1].set_condition_status(Cell::STATUS::open);
+            pole[y+1][x-1].set_condition_status(open);
         if (pole[y+1][x].get_condition_mined() == no)
-            pole[y+1][x].set_condition_status(Cell::STATUS::open);
+            pole[y+1][x].set_condition_status(open);
         if (pole[y+1][x+1].get_condition_mined() == no)
-            pole[y+1][x+1].set_condition_status(Cell::STATUS::open);
+            pole[y+1][x+1].set_condition_status(open);
     }
 }
 
-bool Field::game_running(int game_end = 1){
+bool Field::game_running(int game_end = 1){ /* выключатель, при вызове с аргументом
+                                         game_end = 0 завершает цикл while() в основной функции main()*/
     if (game_end == 0){
         game_run = game_end;
     } 
     return game_run;
 }
 
-bool Field::loos(){
+bool Field::lose(){ // взрыв. провоцирует вызов game_running() через main()
     bool flag = false;
     for (int i = 1; i <= height; ++i)
         for (int j = 1; j <= width; ++j)
@@ -121,7 +122,7 @@ bool Field::loos(){
                 }
     return flag;
 }
-bool Field::win(){
+bool Field::win(){ // победа. провоцирует вызов game_running() через main()
     bool flag = true;
     for (int i = 1; i <= height; ++i)
         for (int j = 1; j <= width; ++j)
@@ -135,5 +136,3 @@ bool Field::win(){
     }
     return flag;
 }
-
-// TODO: нельзя нажимать на открытые клетки
