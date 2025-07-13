@@ -15,24 +15,24 @@ public:
         MINED mined;
     };
  protected:
-    Status status{close, no};
+    Status condition{close, no};
     Coords coords;
     int env{0};
 public:
     Cell() = default;
-    explicit Cell(STATUS status, MINED mined):status{status, mined}{}
-    void set_status_status(STATUS status){
-        this->status.status = status;
+    explicit Cell(STATUS status, MINED mined):condition{status, mined}{}
+    void set_condition_status(STATUS status){
+        this->condition.status = status;
     }
-    void set_status_mined(MINED mined){
-        this->status.mined = mined;
+    void set_condition_mined(MINED mined){
+        this->condition.mined = mined;
     }
     void set_coords(int x, int y){
         coords.x = x;
         coords.y = y;
     }
-    Status get_status(){return status;}
-    MINED get_mined(){return status.mined;}
+    STATUS get_condition_status(){return condition.status;}
+    MINED get_condition_mined(){return condition.mined;}
     Coords get_coords(){return coords;}
     void print_cell(int);
 };
@@ -56,13 +56,11 @@ public:
 
     void make_pole();
     void print_pole();
-    Status cmp(Coords);
     int count_env(int i, int j);
     void set_status(int i, int j, int flag);
 
-    bool game_running(int game_end = 1){
-        if (game_end == 0) game_run = game_end;
-        return game_run;
-    }
+    bool game_running(int);
+    bool win();
+    bool loos();
 };
 

@@ -38,7 +38,11 @@ int main(){
             }
             else {
                 pole.set_status(input.y, input.x, flag);
-                pole.print_pole();
+                if (pole.loos())
+                    pole.game_running(0);
+                else if (pole.win())
+                    pole.game_running(0);
+                else pole.print_pole();
             }
         } 
         else {
